@@ -1,0 +1,51 @@
+#include <SoftwareSerial.h>
+
+#define rxPin 10
+#define txPin 9
+
+char c;
+String recData;
+
+SoftwareSerial mySerial = SoftwareSerial(rxPin, txPin);
+
+void setup()
+{
+  pinMode(13, OUTPUT);
+  
+  pinMode(rxPin, INPUT);
+  pinMode(txPin,OUTPUT);
+  
+  // set the data rate for the SoftwareSerial port
+  mySerial.begin(9600);
+  
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  if(mySerial.available() > 0)  //receiving part
+  {
+    recData = "";
+    while(mySerial.available())
+    {
+      c = mySerial.read();
+      recData += c;
+    }
+    
+    Serial.println("SS Data received =" + recData);
+  }
+  
+  if(Serial.available()) //transmission part
+  {
+    recData="";
+    recData=Serial.readString();
+    Serial.println("Transmitting: "+recData);
+    mySerial.print(recData);
+  }
+  
+  digitalWrite(13,HIGH);
+  delay(1000);
+  digitalWrite(13,LOW);
+  delay(1000);
+}
+     
