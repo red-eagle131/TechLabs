@@ -1,0 +1,10 @@
+int inputVal=0;
+void setup(){
+  pinMode(6,OUTPUT);
+  pinMode(A5,INPUT);
+}
+void loop(){
+  inputVal=analogRead(A5);
+  analogWrite(6,inputVal/4);
+  delay(100);
+}
